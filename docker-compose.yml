@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  mysql_os:
+    image: mysql:5.7
+ 
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: vishnu
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: mydb
+
+  matomo_os:
+    image: matomo:3.13.4-apache
+    restart: always
+    depends_on:
+      - mysql_os
+    ports:
+      - 8081:80
+    environment:
+      MATOMO_DATABASE_HOST: mysql_os
+      MATOMO_DATABASE_PASSWORD: root
+      MATOMO_DATABASE_USERNAME: vishnu
+      MATOMO_DATABASE_DBNAME: mysql_storage
+   
